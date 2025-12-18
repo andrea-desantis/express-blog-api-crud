@@ -45,6 +45,23 @@ function modify(req, res) {
 // ----------DESTROY----------
 function destroy(req, res) {
     const id = parseInt(req.params.id);
+
+    const index = dino.findIndex((dinosauro) => dinosauro.id === id);
+
+    // id non trovato
+    if( index ===-1){
+        res.status(404);
+        res.json({
+            error:"Not Found",
+            message: "Dinosauro non trovato"
+        });
+    } else{ //rimuovo l'elemento
+        dino.splice(index, 1);
+        res.sendStatus(204)
+    }
+
+
+
     res.send(`Elimina il post ${id}`)
 }
 
