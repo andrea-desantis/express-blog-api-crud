@@ -1,7 +1,10 @@
 import dino from "../dino.js";
 // ----------INDEX----------
 function index(req, res){
-    res.send(dino);
+
+    const dinoIndex = dino.map(({ id, title}) => ({ id, title}));
+
+    res.send(dinoIndex);
 }
 
 // ----------SHOW----------
