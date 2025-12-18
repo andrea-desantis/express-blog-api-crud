@@ -1,7 +1,7 @@
 import dino from "../dino.js";
 // ----------INDEX----------
 function index(req, res){
-    res.send("Lista dei post");
+    res.send(dino);
 }
 
 // ----------SHOW----------
