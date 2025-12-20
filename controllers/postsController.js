@@ -49,7 +49,7 @@ function destroy(req, res) {
     const index = dino.findIndex((dinosauro) => dinosauro.id === id);
 
     // id non trovato
-    if( index ===-1){
+    if( index === -1){
         res.status(404);
         res.json({
             error:"Not Found",
