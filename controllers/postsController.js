@@ -15,10 +15,10 @@ function show(req, res) {
 
     if (dinosauro !== undefined) {
         res.json(dinosauro);
-    } else{
+    } else {
         res.status(404);
         res.json({
-            error:"Not Found",
+            error: "Not Found",
             message: "Dinosauro non trovato"
         })
     }
@@ -27,8 +27,9 @@ function show(req, res) {
 // ----------STORE----------
 function store(req, res) {
     const dati = req.body;
+    console.log(dati);
 
-    if (dati.title ===undefined || dati.title.length === 0){
+    if (dati.title === undefined || dati.title.length === 0) {
         res.status(400);
         return res.json({
             error: "Client Error",
@@ -37,8 +38,8 @@ function store(req, res) {
     }
 
 
-    const newId = dino[dino.lenght - 1].id + 1;
-    const newDino ={
+    const newId = dino[dino.length - 1].id + 1;
+    const newDino = {
         id: newId,
         title: dati.title,
         content: dati.content,
@@ -54,7 +55,23 @@ function store(req, res) {
 // ----------UPDATE----------
 function update(req, res) {
     const id = parseInt(req.params.id);
-    res.send(`Modifica il post ${id}`)
+    const dati = req.body;
+
+    const dinosauro = dino.find(dino => dino.id === id);
+
+    if (!dinosauro) {
+        return res.status(404).json({
+            error: "Not Found",
+            message: "Dinosauro non trovato"
+        });
+    }
+
+
+    dinosauro.title = dati.title;
+    dinosauro.content = dati.content;
+    dinosauro.image = dati.image;
+    dinosauro.tags = dati.tags;
+    res.json(dinosauro);
 }
 
 // ----------MODIFY----------
@@ -71,20 +88,16 @@ function destroy(req, res) {
     const index = dino.findIndex((dinosauro) => dinosauro.id === id);
 
     // id non trovato\\
-    if( index === -1){
+    if (index === -1) {
         res.status(404);
         res.json({
-            error:"Not Found",
+            error: "Not Found",
             message: "Dinosauro non trovato"
         });
-    } else{ //rimuovo l'elemento
+    } else { //rimuovo l'elemento
         dino.splice(index, 1);
         res.sendStatus(204)
     }
-
-
-
-    res.send(`Elimina il post ${id}`)
 }
 
 const controller = {
