@@ -26,7 +26,29 @@ function show(req, res) {
 
 // ----------STORE----------
 function store(req, res) {
-    res.send("Creazione nuovo post")
+    const dati = req.body;
+
+    if (dati.title ===undefined || dati.title.length === 0){
+        res.status(400);
+        return res.json({
+            error: "Client Error",
+            message: "Il Title è obbligatorio"
+        });
+    }
+
+
+    const newId = dino[dino.lenght - 1].id + 1;
+    const newDino ={
+        id: newId,
+        title: dati.title,
+        content: dati.content,
+        image: dati.image,
+        tags: dati.tags
+    };
+
+    dino.push(newDino);
+    res.status(201);
+    res.json(newDino);
 }
 
 // ----------UPDATE----------
@@ -48,7 +70,7 @@ function destroy(req, res) {
 
     const index = dino.findIndex((dinosauro) => dinosauro.id === id);
 
-    // id non trovato
+    // id non trovato\\
     if( index === -1){
         res.status(404);
         res.json({
