@@ -1,5 +1,5 @@
 import express from "express";
-import dino from "./dino.js";
+
 
 import postsRouter from "./routers/posts.js";
 
@@ -22,11 +22,19 @@ app.get("/", (req, res) => {
 });
 
 
-// middlewares errors handler
-app.use(errorHandler);
 
 // router dei post
 app.use("/posts", postsRouter);
+
+// i middlewares vanno messi dopo le route perché 
+// essendo express a cascata, se messi PRIMA delle route
+// darebbero sempre errore poiche il programma legge prima 
+// l'errore che il path
+
+
+
+// middlewares errors handler
+app.use(errorHandler);
 
 // middleware not found
 app.use(notFound);
