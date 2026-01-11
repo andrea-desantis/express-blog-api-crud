@@ -10,26 +10,26 @@ import notFound from "./middlewares/notFound.js"
 const app = express();
 const port = 3000;
 
-// middlewares
-app.use(errorHandler);
-app.use(notFound);
 
 
+// express
 app.use(express.json());
-
 app.use(express.static('public'));
+
 
 app.get("/", (req, res) => {
     res.send("Server del mio blog");
 });
 
 
-
+// middlewares errors handler
+app.use(errorHandler);
 
 // router dei post
 app.use("/posts", postsRouter);
 
-
+// middleware not found
+app.use(notFound);
 
 app.listen(port, () => {
     console.log("funziona");
