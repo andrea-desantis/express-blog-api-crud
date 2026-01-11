@@ -3,8 +3,16 @@ import dino from "./dino.js";
 
 import postsRouter from "./routers/posts.js";
 
+import errorHandler from "./middlewares/errorHandler.js";
+import notFound from "./middlewares/notFound.js"
+
+
 const app = express();
 const port = 3000;
+
+// middlewares
+app.use(errorHandler);
+app.use(notFound);
 
 
 app.use(express.json());
@@ -16,32 +24,7 @@ app.get("/", (req, res) => {
 });
 
 
-app.get("/bacheca", (req, res) => {
 
-
-
-    const caratteristiche = req.query.tags;
-    console.log(caratteristiche);
-
-    let filteredDino = dino;
-
-    if (caratteristiche !== undefined) {
-        filteredDino = dino.filter((dinosauro) =>
-            dinosauro.tags.includes(caratteristiche)
-        );
-
-        const risposta = {
-            count: filteredDino.length,
-            results: filteredDino,
-        };
-
-        res.json(risposta)
-    }
-
-
-
-
-});
 
 // router dei post
 app.use("/posts", postsRouter);
